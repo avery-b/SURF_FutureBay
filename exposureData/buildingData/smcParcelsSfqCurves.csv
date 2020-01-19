@@ -1,0 +1,91 @@
+PUC,SMC_PUC_DESC,useType,Source,Stru_ID,Cont_ID,nResUnits,FFE,FFE_stdev,CSVR,CSVR_stdev
+0,Vacant Land,VACANT,,999,999,,0,0,0,0
+1,Single Family Residence,RESIDENTIAL,USACE - San Francisquito Creek,678,678,1,1.06,0.83,0.5,0.12
+2,Duplex,RESIDENTIAL,USACE - San Francisquito Creek,665,665,2,1.06,0.83,0.5,0.12
+3,Triplex,RESIDENTIAL,USACE - San Francisquito Creek,665,665,3,1.06,0.83,0.5,0.12
+4,Fourplex,RESIDENTIAL,USACE - San Francisquito Creek,666,666,4,1.06,0.83,0.5,0.12
+5,Five or More Units,RESIDENTIAL,USACE - San Francisquito Creek,666,666,5,1.06,0.83,0.5,0.12
+6,Hotel,COMMERCIAL,USACE - San Francisquito Creek,666,666,,0.58,0.11,0.9,0.9
+7,Mobilehome,RESIDENTIAL,USACE - San Francisquito Creek,667,667,1,1.06,0.83,0.5,0.12
+8,Boarding House,RESIDENTIAL,USACE - San Francisquito Creek,666,666,5,1.06,0.83,0.5,0.12
+9,Mobilehome Park,RESIDENTIAL,USACE - San Francisquito Creek,667,667,1,1.06,0.83,0.5,0.12
+11,Store,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.7,1.45
+12,Store & Office,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.7,1.45
+13,Store & Residence,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.7,1.45
+14,Supermarket,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.4,0.7
+15,Department Store,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,1.7,1.45
+16,Shopping Center,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,1.7,1.45
+17,Office: Single Story,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.9,0.9
+18,Office: Multi-Story,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,0.9,0.9
+19,Professional Bldg.,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,0.9,0.9
+21,Restaurant,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.4,0.7
+22,Indoor Recreation,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.4,0.7
+23,Financial,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,0.9,0.9
+24,Service Shop,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.9,0.9
+25,Service Station,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.9,0.9
+26,Auto/Sales Repair,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.9,0.9
+27,Parking Lot,VACANT,,999,999,,0,0,0,0
+28,Wholesale,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,1.4,0.7
+29,Educational Facility,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,0.9,0.9
+31,Light Mfg.,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+32,Mini Warehouse,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+33,"Lumber Yard, Mill",INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+34,R & D Flex,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+35,Biotech,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+36,Food Processing,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+37,Mineral Processing,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+38,Warehouse,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+39,Open Storage,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+40,Row Crops,VACANT,,999,999,,0,0,0,0
+41,Row Crops & Dry Farm,VACANT,,999,999,,0,0,0,0
+42,"TPZ, Vacant",VACANT,,999,999,,0,0,0,0
+43,"TPZ, Improved",VACANT,,999,999,,0,0,0,0
+44,"AG. Preserve, Vacant",VACANT,,999,999,,0,0,0,0
+45,"AG. Preserve, Improved",VACANT,,999,999,,0,0,0,0
+46,Dry Farm & Pasture,VACANT,,999,999,,0,0,0,0
+47,Grazing,VACANT,,999,999,,0,0,0,0
+48,"Wooded, Timber",VACANT,,999,999,,0,0,0,0
+49,"Brush, Barren",VACANT,,999,999,,0,0,0,0
+50,"Vacant Land, Under 40 Acres",VACANT,,999,999,,0,0,0,0
+51,"SFR, Under 5 Acres",RESIDENTIAL,USACE - San Francisquito Creek,678,678,1,1.06,0.83,0.5,0.12
+52,"SFR, 5 to 40 Acres",RESIDENTIAL,USACE - San Francisquito Creek,678,678,1,1.06,0.83,0.5,0.12
+53,"SFR, Over 40 Acres",RESIDENTIAL,USACE - San Francisquito Creek,678,678,1,1.06,0.83,0.5,0.12
+54,"Multi-use Imps, Under 5 Acres",COMMERCIAL,USACE - San Francisquito Creek,666,666,1,0.58,0.11,0.4,0.7
+55,"Multi-use Imps, 5 - 40 Acres",COMMERCIAL,USACE - San Francisquito Creek,666,666,1,0.58,0.11,0.4,0.7
+56,"Multi-use Imps, Over 40 Acres",COMMERCIAL,USACE - San Francisquito Creek,666,666,1,0.58,0.11,0.4,0.7
+57,Aux. Farm Improvements,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+58,Misc. Farm Improvements,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+59,Nurseries & Greenhouses,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+61,Theatre,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,0.4,0.7
+62,Airport,COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,1.1,0.9375
+63,Marina,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.1,0.9375
+64,Club/Lodge,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.1,0.9375
+65,"Auditorium, Stadium, Pier",COMMERCIAL,USACE - San Francisquito Creek,671,671,,0.58,0.11,1.1,0.9375
+66,Golf Course,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.1,0.9375
+68,Camp,COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,1.1,0.9375
+69,Park,PUBLIC,USACE - San Francisquito Creek,670,670,,0.7,0.2,0.4,0.5
+71,Church,PUBLIC,USACE - San Francisquito Creek,670,670,,0.7,0.2,0.4,0.5
+72,School,PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+73,College,PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+74,Hospital,PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+75,"Nursing, Convalescent Home",PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+76,Post Office,PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+77,"Cemetery, Mortuary",COMMERCIAL,USACE - San Francisquito Creek,670,670,,0.58,0.11,0.9,0.9
+78,Community Center,PUBLIC,USACE - San Francisquito Creek,671,671,,0.7,0.2,0.4,0.5
+79,C/I Msc.,COMMERCIAL,USACE - San Francisquito Creek,662,662,,0.58,0.11,1.1,0.9375
+81,Water Co.,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+82,Mining,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+83,Gas & Oil Wells,INDUSTRIAL,USACE - San Francisquito Creek,662,662,,0.5,0.24,0.7,1
+84,Pipelines/Canals,VACANT,,999,999,,0,0,0,0
+85,Right of Way,VACANT,,999,999,,0,0,0,0
+87,Underwater & Marsh,VACANT,,999,999,,0,0,0,0
+88,Highways & Streets,VACANT,,999,999,,0,0,0,0
+89,Residential Misc.,RESIDENTIAL,USACE - San Francisquito Creek,678,678,,1.06,0.83,0.5,0.12
+91,More than 1 detached living unit,RESIDENTIAL,USACE - San Francisquito Creek,678,678,2,1.06,0.83,0.5,0.12
+92,SFR converted to 2 units,RESIDENTIAL,USACE - San Francisquito Creek,678,678,2,1.06,0.83,0.5,0.12
+93,SFR & Duplex or Triplex,RESIDENTIAL,USACE - San Francisquito Creek,678,678,3,1.06,0.83,0.5,0.12
+94,Two Duplexes,RESIDENTIAL,USACE - San Francisquito Creek,666,666,4,1.06,0.83,0.5,0.12
+95,Residential; Combination of Unit Types,RESIDENTIAL,USACE - San Francisquito Creek,666,666,1,1.06,0.83,0.5,0.12
+96,"Fourplex plus a Residence,Duples or Tri",RESIDENTIAL,USACE - San Francisquito Creek,666,666,5,1.06,0.83,0.5,0.12
+97,Residential Condo,RESIDENTIAL,USACE - San Francisquito Creek,666,666,5,1.06,0.83,0.5,0.12
+98,Co-Operative Apartment,RESIDENTIAL,USACE - San Francisquito Creek,666,666,5,1.06,0.83,0.5,0.12

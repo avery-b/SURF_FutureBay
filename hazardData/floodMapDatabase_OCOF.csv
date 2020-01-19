@@ -1,0 +1,13 @@
+Sea Level Rise (cm),Return Period (yr),File Path
+0,1,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR000_W001ft_null.tif
+0,20,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR000_W020ft_null.tif
+0,100,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR000_W100ft_null.tif
+25,1,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR025_W001ft_null.tif
+25,20,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR025_W020ft_null.tif
+25,100,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR025_W100ft_null.tif
+50,1,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR050_W001ft_null.tif
+50,20,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR050_W020ft_null.tif
+50,100,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR050_W100ft_null.tif
+75,1,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR075_W001ft_null.tif
+75,20,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR075_W020ft_null.tif
+75,100,exampleGeodatabase.gdb\OurCoastOutFuture_Feet_Downscaled\SLR075_W100ft_null.tif

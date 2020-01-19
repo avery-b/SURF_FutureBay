@@ -1,0 +1,5 @@
+Shape,Field,Field Length,File Path
+County,cnty,5,exampleGeodatabase.gdb\aggregationShapes\counties_bay
+Tract,tract,11,exampleGeodatabase.gdb\aggregationShapes\tracts_sanMateo
+Blockgroup,bkgp,12,exampleGeodatabase.gdb\aggregationShapes\blockgroups_sanMateo_shoreline
+Block,blck,15,exampleGeodatabase.gdb\aggregationShapes\tracts_sanMateo

@@ -1,0 +1,8 @@
+Occupancy,Description,useCode,Stru_ID,Cont_ID,CSVR,CSVR_stdev,FFE,FFE_stdev
+IND,Industrial Generic,INDUSTRIAL,662,662,0.7,1,0.5,0.24
+MFR1,Multi-Family Residential 1-story,RESIDENTIAL,665,665,0.5,0.12,1.06,0.83
+MFR2,Multi-Family Residential 2-story,RESIDENTIAL,666,666,0.4,0.12,1.06,0.83
+MH,Mobile Homes,RESIDENTIAL,667,667,0.5,0.12,1.06,0.83
+OFFICE-1,"1SNB structure, one story",COMMERCIAL,670,670,0.9,0.9,0.58,0.11
+OFFICE-2,"2SNB structure, two story",COMMERCIAL,671,671,0.9,0.9,0.58,0.11
+SFR1,Single Family Residential 1-story,RESIDENTIAL,678,678,0.5,0.12,1.06,0.83

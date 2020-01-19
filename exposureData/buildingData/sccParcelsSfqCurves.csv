@@ -1,0 +1,36 @@
+"PUC","PUC1","PUC2","SCC_PUC_DESC","useType","Source","Stru_ID","Cont_ID","nResUnits","FFE","FFE_stdev","CSVR","CSVR_stdev"
+0,0,1,"Unknown","VACANT",,999,999,,,,,
+1,1,1,"Single Family","RESIDENTIAL","USACE - San Francisquito Creek",678,678,1,0.6,0.14,0.5,0.12
+2,2,1,"Two Family","RESIDENTIAL","USACE - San Francisquito Creek",665,665,2,0.6,0.14,0.5,0.12
+3,3,1,"Three and Four Family","RESIDENTIAL","USACE - San Francisquito Creek",666,666,4,0.6,0.14,0.5,0.12
+4,4,1,"Five or more Family","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4A",4,2,"5-10 Units","RESIDENTIAL","USACE - San Francisquito Creek",666,666,8,0.6,0.14,0.5,0.12
+"4B",4,3,"11-20 Units","RESIDENTIAL","USACE - San Francisquito Creek",666,666,16,0.6,0.14,0.5,0.12
+"4C",4,4,"21-50 Units","RESIDENTIAL","USACE - San Francisquito Creek",666,666,36,0.6,0.14,0.5,0.12
+"4D",4,5,"51-100 Units","RESIDENTIAL","USACE - San Francisquito Creek",666,666,76,0.6,0.14,0.5,0.12
+"4E",4,6,"Over 100 Units","RESIDENTIAL","USACE - San Francisquito Creek",666,666,100,0.6,0.14,0.5,0.12
+"4F",4,7,"Mixed Use: Apts & Retail","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4G",4,8,"Mixed Use: Apts & Office","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4H",4,9,"Retirement Complex","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4I",4,10,"Seniors Only","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4J",4,11,"Lifecare Facility","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4K",4,12,"Co-Op","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4L",4,13,"Mobile Home Park","RESIDENTIAL","USACE - San Francisquito Creek",667,667,1,0.6,0.14,0.5,0.12
+"4M",4,14,"Govt Restricted/Subsidized Section 236","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4N",4,15,"Govt Restricted/Subsidized Section 221 d3","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4O",4,16,"Govt Restricted/Subsidized Section Other","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+"4P",4,17,"Parking for Existing Apartment Complex","RESIDENTIAL","USACE - San Francisquito Creek",999,999,,,,,
+5,5,1,"Farm Labor Camp in Urban Location","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+6,6,1,"Condominium, Townhouse","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+7,7,1,"Fraternity, Sorority, Boarding, Rooming House","RESIDENTIAL","USACE - San Francisquito Creek",666,666,5,0.6,0.14,0.5,0.12
+8,8,1,"Mobile Home NOT in Park","RESIDENTIAL","USACE - San Francisquito Creek",667,667,1,0.6,0.14,0.5,0.12
+9,9,1,"Summer Cabins","RESIDENTIAL","USACE - San Francisquito Creek",678,678,1,0.6,0.14,0.5,0.12
+67,67,1,"Mobile Homes in Parks","RESIDENTIAL","USACE - San Francisquito Creek",667,667,1,0.6,0.14,0.5,0.12
+69,69,1,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69A",69,2,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69B",69,3,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69C",69,4,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69D",69,5,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69E",69,6,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69F",69,7,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,
+"69G",69,8,"Vacant Urban","VACANT","USACE - San Francisquito Creek",999,999,,,,,

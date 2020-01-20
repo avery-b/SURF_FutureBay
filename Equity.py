@@ -18,7 +18,6 @@ import pandas as pd
 import numpy as np
 from copy import copy
 from multiprocessing import Pool
-import pickle
 import sys
 
 np.warnings.filterwarnings('ignore')
@@ -420,18 +419,6 @@ class EquityModel(object):
 						saveSumStats(pathIncomeBracketResults, incomeBracketColumns[incomeBracket]+"_Counts", \
 							householdCountsDF, stdev = True, median = True, bkgp = bkgpColumn)
 
-						# ~~~~~~~~~~~~~~~~~~~~~
-						# Save DI, ADI, Results
-						# ~~~~~~~~~~~~~~~~~~~~~
-						#	Save all DI results for this block group in a pickle file - high storage usage
-						# adiFile =os.path.join(pathIncomeBracketResults, "{}.csv".format(incomeBracketColumns[incomeBracket]+"_ADIs"))
-						# with open(adiFile[:-4] + '.data', 'wb') as filehandle:
-						#	pickle.dump(incomeBracketADIs, filehandle)
-						#	Save all DI results for this block group in a pickle file - high storage usage
-						#diFile = os.path.join(pathIncomeBracketResults, "{}.csv".format(incomeBracketColumns[incomeBracket]+"_DIs"))
-						#with open(diFile[:-4] + '.data', 'wb') as filehandle:
-						#	pickle.dump(incomeBracketADIs, filehandle)
-
 				#	Parallelized function above by blockgroup
 				print("Creating sumStats_householdADI files for blockgroups...")
 #				Pool().map(sumStatsForHouseholdADI, self.resBldgs.bkgpGEOID.unique().tolist())
@@ -732,13 +719,13 @@ if __name__ == '__main__':
 	#	Equity model
 	equity = EquityModel(
 
-		pathBuildingDF = "output/exampleDataPrepResults.csv",
+		pathBuildingDF = "prepData/prepResults/residentialSample.csv",
 		simName = "exampleEquityResults",
 		saveResults = ["monteCarloADI", "sumStats_householdADI"],
 		years=[2020, 2030, 2040, 2050, 2060],
 		fractionUncompensated = 0.372,
-		exposureResultsPath = "output/exampleExposureResults/monteCarloAAL/",
-		structureDamagesPath = "output/exampleExposureResults/percDmgStru/")
+		exposureResultsPath = "prepData/prepResults/test/monteCarloAAL/",
+		structureDamagesPath = "prepData/prepResults/test/percDmgStru/")
 
 	equity.runModel()
 	equity.aggregateResults()

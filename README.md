@@ -1,8 +1,8 @@
 # SURF - Stanford Urban Risk Framework
 
-A python framework for flood risk analysis. It was designed to 1) project flooding damage at the building-scale due to coastal flooding and sea level rise 2) project financial impacts to households across incomes and demographics, and 3) account for uncertainty through monte carlo methodology.
+A python framework for flood risk analysis. It was designed to 1) project flooding damage at the building-scale due to coastal flooding and sea level rise 2) project financial impacts to households across incomes and demographics at the Census block group scale, and 3) account for uncertainty through monte carlo methodology.
 
-Co-developed by Avery Bick (MS Environmental Engineering '18) and Adrian S. Santiago Tate (MS Geophysics '20) from mid 2018 to late 2019. This code supported the publication 'Rising seas, rising inequity? Communities at risk in the San Francisco Bay Area and implications for adaptation policy.' It began in a project learning course run by Stanford Future Bay Initiative in which we co-developed studies of sea level rise risk in the Bay Area with local stakeholders. Avery, Adrian, and another alum Arnav (MS Geophysics '19) went on to develop a flood risk data company, HighTide Intelligence.
+Co-developed by Avery Bick (MS Environmental Engineering '18) and Adrian S. Santiago Tate (MS Geophysics '20) from mid 2018 to late 2019. This code supported the publication 'Rising seas, rising inequity? Communities at risk in the San Francisco Bay Area and implications for adaptation policy.' It began in a project learning course run by Stanford Future Bay Initiative in which we co-developed studies of sea level rise risk in the Bay Area with local stakeholders. Avery, Adrian, and another Future Bay alum Arnav (MS Geophysics '19) went on to develop a flood risk data company, HighTide Intelligence.
 
 Contact:
 Avery@hightide.ai
@@ -53,7 +53,7 @@ This module runs on Python 3 and requires no licenses.
 
 7. Add a replacement cost factor for your region (see U.S. Bureau of Economic Analysis regional price parities).
 
-8. Set your saveResults options. To run equity.py next you need ["monteCarloAAL", "percDmgStru"]. "SummaryStatsAAL" is also a useful setting and saves AAL predicted per building.
+8. Set your saveResults options. To run equity.py next you need ["monteCarloAAL", "percDmgStru"]. "SummaryStatsAAL" is also a useful setting and saves AAL predicted per building. This data can then be joined back to the original building footprints via the 'buildingID' field.
 
 9. Set the number of iterations (attribute 'nIterations') of Monte Carlo to run. The more iterations, the longer the model can move towards a stable mean of AAL estimates. We find that 1,000 iterations is suitable.
 
@@ -79,7 +79,6 @@ This module runs on Python 3 and requires no licenses.
 4. Set the 'structureDamagesPath' to the folder containing the "percDmgStru" results from the Exposure model.
 
 5. Set the years in decadal format that your analysis is focused on. Annual income losses will be calculated over this time frame (see attribute 'years').
-
 
 6. Choose which sea level rise projection you are using (see attribute 'pathProjections')
 

@@ -5,8 +5,8 @@ S.U.R.F.
 	Exposure Model
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Written by Adrian F. Santiago Tate & Ian Avery Bick
-October, 2018, to January, 2019
+Written by Adrian F. Santiago Tate
+-	October, 2018, to August, 2019
 
 """
 
@@ -20,11 +20,12 @@ import pandas as pd
 import time
 from copy import copy
 from collections import OrderedDict
-from p_tqdm import p_map, t_map
+from multiprocessing import Pool
 
 np.random.seed(0)
 
 class ExposureModel(object):
+
 	def __init__(self, pathBuildingDF, simName,
 
 		#	kwargs
@@ -32,18 +33,16 @@ class ExposureModel(object):
 		repCostLocationFactor = 1.,
 		nIterations = 1000,
 		saveResults = False,
-		#	Input data paths
-		pathHazardRasters = "publicationData/hazardData/floodMapDatabase_OCOF_Publication.csv",
-		pathFloodScenarios = "publicationData/hazardData/floodScenarios_OCOF_publication.txt",
 		#	Hazard data paths
-		pathProjections = "publicationData/hazardData/occurrenceRateTables/OCOF_original/",
+		pathFloodScenarios = "hazardData/floodScenarios_OCOF.txt",
+		pathProjections = "hazardData/occurrenceRateTables/OCOF/",
 		#	Exposure data paths
-		pathBuildingDatabase = "publicationData/dataPrepFiles/buildingLookup_SanFrancisquitoCreek.csv",
-		pathRepCostDatabase_mean = "publicationData/exposureData/repCostDatabase_mean.csv",
-		pathRepCostDatabase_stdev = "publicationData/exposureData/repCostDatabase_stdev.csv",
+		pathBuildingDatabase = "exposureData/buildingData/smcParcelsSfqCurves.csv",
+		pathRepCostDatabase_mean = "exposureData/repCostData/rsMeans2017_mean.csv",
+		pathRepCostDatabase_stdev = "exposureData/repCostData/rsMeans2017_stdev.csv",
 		#	Vulnerability data paths
-		pathFloodFragDatabaseStru_mean = "publicationData/vulnerabilityData/floodFragDatabaseStructure.csv",
-		pathFloodFragDatabaseCont_mean = "publicationData/vulnerabilityData/floodFragDatabaseContent.csv"):
+		pathFloodFragDatabaseStru_mean = "vulnerabilityData/floodFragDatabaseStru_mean.csv",
+		pathFloodFragDatabaseCont_mean = "vulnerabilityData/floodFragDatabaseCont_mean.csv"):
 
 		#~~~~~~~~~~~~~~~~~
 		#	Options
@@ -79,12 +78,14 @@ class ExposureModel(object):
 
 		#	List of floodScenarios and corresponding rasters
 		with open(pathFloodScenarios, 'r') as f: self.floodScenarios = f.read().splitlines()
-		self.hazardRasters = pd.DataFrame(pd.read_csv(pathHazardRasters))
+#		self.hazardRasters = pd.DataFrame(pd.read_csv(pathHazardRasters))
 
 		#	Exposure databases
 		self.buildingDatabase = pd.DataFrame(pd.read_csv(pathBuildingDatabase))
 		self.repCostDatabase_mean = pd.DataFrame(pd.read_csv(pathRepCostDatabase_mean))
-		self.repCostDatabase_stdev = pd.DataFrame(pd.read_csv(pathRepCostDatabase_stdev))
+		#	-	Handle not having stdev data for repCost
+		if pathRepCostDatabase_stdev is None: self.repCostDatabase_stdev = None
+		else: self.repCostDatabase_stdev = pd.DataFrame(pd.read_csv(pathRepCostDatabase_stdev))
 
 		#	Vulnerability databases
 		self.floodFragDatabaseStru_mean = pd.DataFrame(pd.read_csv(pathFloodFragDatabaseStru_mean))
@@ -95,23 +96,23 @@ class ExposureModel(object):
 	# ExposureModel methods
 	# ~~~~~~~~~~~~~~~~~~~~~
 
-	def createBuildings(self, implementation = "parallel", nodes = 2, nBuildings = None, overwrite = True):
+	def runModel(self, implementation = "parallel", nodes = 2, nBuildings = None, overwrite=False):
 		"""
 
-		Effectively executes the Exposure Model by creating all buildings. Provides the user with high-level control.
+		Runs the Exposure Model by creating all buildings. Provides the user with high-level control.
 
 		kwargs:
 		-	implementation: ["parallel", "serial"]
-			-	"parallel": multiprocessing with pathos. buildingDFRows mapped to nodes.
+			-	"parallel": multiprocessing.
 			-	"serial": buildings created in sequence by iterating through rows of buildingDF.
 		-	nodes: integer value specifies number of nodes for parallel processing.
 		-	nBuildings: integer value specifies number of buildings to create - usually for testing.
-		-	overwrite: boolean useful if code crashes. if False, skips buildings with completed results.
+		-	overwrite: specify whether or not to overwrite previous results in same directory
 
 		"""
 		try: self.saveResults is not False
 		except:
-			print("EquityModel.saveResults is False. User must specify values to save to create buildings.")
+			print("ExposureModel.saveResults is False. User must specify values to save to create buildings.")
 			raise
 
 		#	Process entire buildingDF if no value is specified by user
@@ -120,32 +121,36 @@ class ExposureModel(object):
 		#	Overwrite files by default, or only create buildings that have not been created yet if specified.
 		if overwrite is True:
 			buildingDFRows = range(nBuildings)
+			#	Implement building creation
+			print("Creating {} buildings".format(nBuildings))
+			bldgs = [i for i in range(nBuildings)]
 		elif overwrite is False:
 			checkFolder = self.pathResults + self.saveResults[0]
 			if os.path.exists(checkFolder) is True:
-				buildingDFRows = []
+				bldgs = []
 				completedResults = sorted([int(f[:-4]) for f in os.listdir(checkFolder) if not f.startswith('.')])
 				for buildingDFRow in range(nBuildings):
 					if self.buildingDF["buildingID"].loc[buildingDFRow] not in completedResults:
-						buildingDFRows.append(buildingDFRow)
+						bldgs.append(buildingDFRow)
 
 		#	Create result dirs
 		for resultName in self.saveResults:
 			if os.path.exists(self.pathResults + resultName) is False: os.mkdir(self.pathResults + resultName)
 
 		#	Implement building creation
-		print("Creating {} buildings".format(nBuildings))
-		bldgs = [i for i in buildingDFRows]
+#		print("Creating {} buildings".format(nBuildings))
+#		bldgs = [i for i in range(nBuildings)]
+
 		if implementation is "parallel":
-			p_map(self.createBuilding, bldgs, num_cpus=nodes)
+			Pool(processes=nodes).map(self.floodBuilding, bldgs)
 		elif implementation is "serial":
-			t_map(self.createBuilding, bldgs)
+			for bldgDFRow in bldgs: self.floodBuilding(bldgDFRow)
 
 		#	Compile results from csv result files into buildingDF-like csv
 		for resultName in self.saveResults:
 			if resultName in ["summaryStatsAAL", "percDmgStru", "buildingInfo"]: getDfFromCsvList(self.pathResults + resultName + "/")
 
-	def createBuilding(self, buildingDFRowNumber):
+	def floodBuilding(self, buildingDFRowNumber):
 
 		#~~~~~~~~~~~~~~~~
 		#	buildingDF
@@ -154,10 +159,20 @@ class ExposureModel(object):
 		#	Read row of building DF
 		building = self.buildingDF.iloc[buildingDFRowNumber]
 		#	Get essential building attributes (unique identifier, area/livingArea in SF, and structure/content ID)
-		buildingID = int(building["buildingID"])
+		buildingIDKey = "buildingID" # (can be "buildingID", "TARGET_FID", etc. depends on what Arc does)
+
+		try:
+			buildingID = int(building[buildingIDKey])
+
+		except ValueError:
+			print(building[buildingIDKey])
+			print(building['APN'])
+
+
 		livingArea = building["floorArea"]
 		struID = int(building["Stru_ID"])
 		contID = int(building["Cont_ID"])
+
 
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		#	buildingDatabase lookup
@@ -181,10 +196,8 @@ class ExposureModel(object):
 
 		#	RS Means 2017 database
 		[livingAreas, repCosts] = readDatabase(self.repCostDatabase_mean, struID, firstDataColumn=5)
-		[livingAreas_stdev, repCosts_stdev] = readDatabase(self.repCostDatabase_stdev, struID, firstDataColumn=5)
 		#	-	Interpolate repCost
 		repCost = linearInterpolation(livingArea, livingAreas, repCosts)
-		repCost_stdev = linearInterpolation(livingArea, livingAreas_stdev, repCosts_stdev)
 		#	USACE fragility curve databases for structures and contents
 		[depthsStru, percDmgsStru] = readDatabase(self.floodFragDatabaseStru_mean, struID, firstDataColumn=4)
 		[depthsCont, percDmgsCont] = readDatabase(self.floodFragDatabaseCont_mean, contID, firstDataColumn=4)
@@ -194,6 +207,10 @@ class ExposureModel(object):
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 		#	repCost ($ per square feet of living area)
+		if self.repCostDatabase_stdev is not None:
+			[livingAreas_stdev, repCosts_stdev] = readDatabase(self.repCostDatabase_stdev, struID, firstDataColumn=5)
+			repCost_stdev = linearInterpolation(livingArea, livingAreas_stdev, repCosts_stdev)
+		else: repCost_stdev = 0
 		randRepCost = self.getPositiveRandomNormalVariable(repCost, repCost_stdev)
 		#	CSVR (content structure value ratio)
 		randCSVR = self.getPositiveRandomNormalVariable(CSVR, CSVR_stdev, decimalPlaces=5)
@@ -227,19 +244,18 @@ class ExposureModel(object):
 			randFldDmgCont[floodScenario].apply(lambda x: linearInterpolation(x, depthsCont, percDmgsCont))
 
 		#	DEL calculation for structures and contents separately
-		#	-	DEL scenarios, argument of riskCalculation
+		#	-	DEL scenarios, argument of riskCalculation FLAG TO LOOK INTO THIS
 		delScenarios = [f + "_DEL" for f in self.floodScenarios]
 		#	-	Initialize dataframes
 		randStruDEL = pd.DataFrame(columns = delScenarios)
 		randContDEL = pd.DataFrame(columns = delScenarios)
-		
 		#	-	Calculate DEL iteratively for all flood scenarios
 		for floodScenario in self.floodScenarios:
 			randStruDEL[floodScenario + "_DEL"] = randValueStru * randFldDmgStru[floodScenario]/100
 			randContDEL[floodScenario + "_DEL"] = randValueCont * randFldDmgCont[floodScenario]/100
 
 		#~~~~~~~~~~~~~~~~~~~
-		#	Calculate AAL
+		#	Calculate AAL - Need to clean this section with Avery
 		#~~~~~~~~~~~~~~~~~~~
 
 		#	Iterate through each monte carlo realization
@@ -340,7 +356,8 @@ class ExposureModel(object):
 		randStruAAL.columns = [column + "_Stru" for column in randStruAAL.columns]
 		randContAAL.columns = [column + "_Cont" for column in randContAAL.columns]
 		randStruResults.columns = [column + "_Stru" for column in randStruResults.columns]
-		randContResults.columns = [column + "_Cont" for column in randContResults.columns]		
+		randContResults.columns = [column + "_Cont" for column in randContResults.columns]
+
 
 		# ~~~~~~~~~~~~~~~~
 		# Save results
@@ -352,7 +369,6 @@ class ExposureModel(object):
 
 			#	Save full Monte Carlo results for total AAL to csv
 			if resultName == "monteCarloAAL":
-				#	Save to csv
 				monteCarloAAL = pd.concat([randAAL, randStruAAL, randContAAL], axis = 1)
 				monteCarloAAL.to_csv(self.pathResults + "monteCarloAAL/" + str(buildingID) + ".csv", index=False)
 
@@ -370,24 +386,6 @@ class ExposureModel(object):
 				data = {'randRepCost': randRepCost, 'randValueStru': randValueStru, 'randValueCont': randValueCont, 'randCSVR':randCSVR, 'randFFE':randFFE}
 				buildingInfo = pd.DataFrame.from_dict(data).astype('float64')
 				saveSumStats(pathResults, buildingID, buildingInfo, stdev=True)
-
-			#	Save Structure DEL
-			if resultName == "StruDEL":
-				saveSumStats(pathResults, buildingID, randStruDEL, stdev=True)			
-
-			#	Save Content DEL
-			if resultName == "ContDEL":
-				saveSumStats(pathResults, buildingID, randContDEL, stdev=True)
-
-			#	Save sensitivity parameters to csv
-			if resultName == "SAParams":
-				#	AAL Scenario of interest for sensitivity analysis
-				aalScenario = "RCP85_DP16_AAL_Totl"
-				#	Create dataframe with sensitivity parameters and AAL specified by aalScenario
-				SAParams = pd.DataFrame(OrderedDict((("CSVR", randCSVR), ("repCost", randRepCost), \
-				("FFE", randFFE), (aalScenario, randAAL[aalScenario]))))
-				#	Save csv for sensitivitiy analysis
-				SAParams.to_csv(self.pathResults + "SAParams/" + str(buildingID) + ".csv", index=False)
 
 
 	def getPositiveRandomNormalVariable(self, mean, stdev, decimalPlaces = 2):
@@ -410,17 +408,14 @@ if __name__ == '__main__':
 
 	#	Exposure model
 	exposure = ExposureModel(
-		pathBuildingDF = "output/exampleDataPrepResults.csv", 
-		simName = "exampleExposureResults",
+		pathBuildingDF = "prepData/prepResults/residentialSample.csv", 
+		simName = "test",
 		#	kwargs
 		repCostLocationFactor = 1.33,
-		saveResults = ["monteCarloAAL"],
-		nIterations = 10000)
+		saveResults = ["monteCarloAAL", "percDmgStru", "summaryStatsAAL", "buildingInfo"])
 
 	#	Create all buildings
-	exposure.createBuildings(
-		#	kwargs
-		nBuildings = 20, implementation = "parallel", nodes=3, overwrite=True)
+	exposure.runModel(implementation = "parallel", nBuildings=None, nodes=4, overwrite=True)
 
 	end = time.time()
 	print("{} seconds".format((end - start)))

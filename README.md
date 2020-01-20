@@ -13,6 +13,8 @@ Joins flood rasters and tax assessor data to building footprints. Prepares data 
 
 This module runs on Python 2 and requires a computer with an ArcGIS license.
 
+Download example geodatabases from: https://drive.google.com/open?id=1Gir38PMRJbfTYxBGaV1XftWLUsHUZuXC
+
 1. Install requirements
 - pip install -r dataPrepRequirements.txt on the system Python 2 installation
 - Add the arcpy location to the computers PYTHONPATH along with the existing Python 2 library and script locations in Windows System Environment Variables, i.e. Path = C:\Python27\Lib; C:\Python27\ArcGIS10.5; C:\Python27\Scripts

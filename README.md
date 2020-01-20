@@ -15,7 +15,7 @@ This module runs on Python 2 and requires a computer with an ArcGIS license.
 
 1. Install requirements
 - pip install -r dataPrepRequirements.txt on the system Python 2 installation
-- Add the arcpy location to the computers PYTHONPATH along with the existing Python 2 library in Windows System Environment Variables, i.e. Path = C:\Python27\Lib; C:\Python27\ArcGIS10.5
+- Add the arcpy location to the computers PYTHONPATH along with the existing Python 2 library and script locations in Windows System Environment Variables, i.e. Path = C:\Python27\Lib; C:\Python27\ArcGIS10.5; C:\Python27\Scripts
 
 2. Starting at if __name__ == '__main__', set your file paths, each file is described in the code and links to an example. 
 

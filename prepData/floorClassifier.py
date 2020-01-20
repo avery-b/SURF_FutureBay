@@ -34,7 +34,7 @@ def trainClassifier(trainingData):
 	XTestDF = pd.DataFrame(X_test, columns=['PUC', 'Height_ft', 'Area_ft'])
 
 	testDF = pd.concat([XTestDF,yTestDF,yPredDF],axis=1)
-	testDF.to_csv('testDataOutput.csv')
+	#testDF.to_csv('testDataOutput.csv')
 
 	print('Floor Classifier Stats:')
 	print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
@@ -107,7 +107,7 @@ def floorCountPrediction(PUC, Height, Area, Classifier):
 
 
 if __name__ == '__main__':
-	trainingData = 'floorClassifierTrainingData_021119.csv'
+	trainingData = 'floorClassifierTrainingData.csv'
 	Classifier, class_names, y_test, y_pred = trainClassifier(trainingData)
 
 	# Building properties

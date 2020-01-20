@@ -51,10 +51,9 @@ def zonalStatistics(buildings, hazardRastersDF, IDField, statistic, pathOutput, 
 	for row in hazardRastersDF.itertuples(index=False, name='Pandas'):
 		# Create output names for zonal statistics tables
 		raster = row[2]
-		pathOutTable = pathOutput + '//ZonalStatisticsTable_' + os.path.basename(raster)[:-4] + '.dbf'
+		pathOutTable = pathOutput + os.path.basename(raster) + '.dbf'
 		# Perform zonal statistics and output database file
 		print('Performing Zonal Statistics for: ', os.path.basename(raster))
-
 		arcpy.sa.ZonalStatisticsAsTable(buildings, IDField, raster, pathOutTable, 'DATA', 'ALL')
 		# Convert database file into a pandas dataframe with pysal module
 		scenarioDF = dbf2DF(pathOutTable)
@@ -93,6 +92,9 @@ def zonalStatistics(buildings, hazardRastersDF, IDField, statistic, pathOutput, 
 	return {'buildingDF':buildingDF, 'scenarioFields':scenarioFields}
 
 def adjustDepthUnits(buildingDF, depthUnit, scenarioFields):
+	"""
+	Converts all types of depth units in flood rasters to feet
+	"""
 	if depthUnit == 'FT':
 		pass
 	elif depthUnit == 'IN':
@@ -100,7 +102,8 @@ def adjustDepthUnits(buildingDF, depthUnit, scenarioFields):
 	elif depthUnit == 'M':
 		buildingDF[scenarioFields] = buildingDF[scenarioFields] * 3.28084
 	elif depthUnit == 'CM':
-		buildingDF[scenarioFields] = buildingDF[scenarioFields] * 0.0328084	
+		buildingDF[scenarioFields] = buildingDF[scenarioFields] * 0.0328084
+
 	return buildingDF
 
 
@@ -113,9 +116,9 @@ def inputHazardRasters(hazardRastersDF):
 	Ex: For 0 in. SLR and 1 year return period, field name would equal 0_1
 	"""
 	# Create a temporary dataframe with SLR and return period fields
-	tempDF = hazardRastersDF[['Sea Level Rise (in)', 'Return Period (yr)']]
+	tempDF = hazardRastersDF[['Sea Level Rise (cm)', 'Return Period (yr)']]
 	# Calculate field name
-	tempDF['Field Name'] = tempDF['Sea Level Rise (in)'].astype(str) + '_' + tempDF['Return Period (yr)'].astype(str)
+	tempDF['Field Name'] = tempDF['Sea Level Rise (cm)'].astype(str) + '_' + tempDF['Return Period (yr)'].astype(str)
 	# Append the temporary dataframe to the hazard map dataframe
 	hazardRastersDF['Field Name'] = tempDF['Field Name']
 	return hazardRastersDF

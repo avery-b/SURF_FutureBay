@@ -20,8 +20,11 @@ import math
 import csv
 from Hazard import *
 import sys
+from prepData import floorClassifier
 
 arcpy.env.overwriteOutput = True
+
+arcpy.ImportToolbox("prepData\SpatialJoinLargestOverlap\SpatialJoinLargestOverlap.tbx")
 
 def dataPrep(pathBuildingFootprints, pathParcels, aggregationTableDF, pathGDB, pathTempFiles, IDField, buildingAreaField, buildingHeightField):
 
@@ -70,10 +73,15 @@ def joinParcelsToBuildings(pathBuildingFootprints, parcels, pathGDB):
 	arcpy.CopyFeatures_management(pathBuildingFootprints, buildingFootprints)
 	tempFeaturesList.append(buildingFootprints)
 
-	# Process: Spatial Join
+	# Process: Standard Spatial Join
+#	print('Spatial joining buildings to parcels.')
+#	buildingFootprintsAPN = os.path.join(pathGDB, os.path.splitext(pathBuildingFootprints)[0] + '_ParcelJoin')
+#	arcpy.SpatialJoin_analysis(buildingFootprints, parcels, buildingFootprintsAPN, "JOIN_ONE_TO_ONE", "KEEP_COMMON", "", "WITHIN", "", "")
+
+	# Process: Spatial Join (Largest Overlap Toolbox)
 	print('Spatial joining buildings to parcels.')
 	buildingFootprintsAPN = os.path.join(pathGDB, os.path.splitext(pathBuildingFootprints)[0] + '_ParcelJoin')
-	arcpy.SpatialJoin_analysis(buildingFootprints, parcels, buildingFootprintsAPN, "JOIN_ONE_TO_ONE", "KEEP_COMMON", "", "WITHIN", "", "")
+	arcpy.SpatialJoinLargestOverlap(buildingFootprints, parcels, buildingFootprintsAPN, "false", "LARGEST_OVERLAP")
 
 	# Process: Summary Statistics
 	print('Performing summary statistics of buildings in parcels.')
@@ -122,7 +130,7 @@ def spatialJoinAggregations(buildingFootprints, aggregationTableDF, pathGDB, IDF
 		fieldmappings = arcpy.FieldMappings()
 
 		# Add all fields from inputs.
-		# fieldmappings.addTable(buildingFootprints)
+		fieldmappings.addTable(buildingFootprints)
 		print(aggregationFeature)
 		fieldmappings.addTable(aggregationFeature)
 		
@@ -220,31 +228,31 @@ def ShapefileToDF(buildings, pathOutput):
 if __name__ == '__main__':
 	## Set file paths
 	# Geodatabase file containing all required data
-	pathGDB = "exampleGeodatabase.gdb"
+	pathGDB = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/exampleGeodatabase.gdb"
 
 	# Building polygon feature class, must contain fields for footprint Area and structure Height in feet	
-	pathBuildingFootprints = "exampleGeodatabase.gdb/SanMateoBuildings_Microsoft2017_sample"
+	pathBuildingFootprints = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/exampleGeodatabase.gdb/SanMateoBuildings_Microsoft2017_test"
 
 	# Tax assessor parcel polygon feature class, must contain fields for property use code, APN, and number of residential units.	
-	pathParcels = "exampleGeodatabase.gdb/SanMateoParcels_Corelogic2017"
+	pathParcels = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/exampleGeodatabase.gdb/SanMateoParcels_Corelogic2017"
 
 	# Directory to store intermediate files during run
-	pathTempFiles = "exampleGeodatabase.gdb/temporaryFiles"
+	pathTempFiles = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/exampleGeodatabase.gdb/temporaryFiles"
 
 	# Directory to write output building data
-	pathOutput = "outputData"
+	pathOutput = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/outputData"
 
 	# CSV containing the sea level rise scenarios, return periods, and raster file paths for hazards
-	pathHazardRasters = "hazardData//floodMapDatabase_OCOF.csv"
+	pathHazardRasters = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/hazardData//floodMapDatabase_OCOF.csv"
 
 	# CSV containing Census blocks, blockgroups, and tract filepaths
-	pathAggregationTable = "prepData//aggregationShapes.csv"
+	pathAggregationTable = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/prepData//aggregationShapes.csv"
 
 	# CSV containing table relating property use code to building properties including depth damage curves 
-	pathBuildingLookup = "exposureData/buildingData//smcParcelsSfqCurves.csv"
+	pathBuildingLookup = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/exposureData/buildingData//smcParcelsSfqCurves.csv"
 
 	# Training data for floor classifier model
-	trainingData = "prepData//floorClassifierTrainingData.csv"
+	trainingData = "C:/Users/IanAvery/Documents/GitHub/SURF_FutureBay/prepData//floorClassifierTrainingData.csv"
 
 	## Instantiate Fragility Curves, Lookup Tables, and Databases as Pandas DataFrames:
 	aggregationTableDF = pd.DataFrame(pd.read_csv(pathAggregationTable))

@@ -5,7 +5,7 @@ A python framework for flood risk analysis. It was designed to 1) project floodi
 Co-developed by Avery Bick (MS Environmental Engineering '18) and Adrian S. Santiago Tate (MS Geophysics '20) from mid 2018 to late 2019. This code supported the publication 'Rising seas, rising inequity? Communities at risk in the San Francisco Bay Area and implications for adaptation policy.' It began in a project learning course run by Stanford Future Bay Initiative in which we co-developed studies of sea level rise risk in the Bay Area with local stakeholders. Avery, Adrian, and another Future Bay alum Arnav (MS Geophysics '19) went on to develop a flood risk data company, HighTide Intelligence.
 
 Contact:
-Avery@hightide.ai
+ianbick@stanford.edu
 
 # How to run SURF
 ## dataPrep.py

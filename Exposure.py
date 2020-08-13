@@ -168,19 +168,19 @@ class ExposureModel(object):
 			print(building[buildingIDKey])
 			print(building['APN'])
 
-
 		livingArea = building["floorArea"]
 		struID = int(building["Stru_ID"])
 		contID = int(building["Cont_ID"])
-
+		PUC = int(building["PUC"])
 
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		#	buildingDatabase lookup
 		#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-		#	Find relevant row in buildingDatabase by matching to Stru_ID
-		maskBuildingTypeID = self.buildingDatabase["Stru_ID"] == struID
-		buildingDatabaseRow = self.buildingDatabase.loc[maskBuildingTypeID,:]
+		#	Find relevant row in buildingDatabase by matching to PUC
+		maskBuildingID = self.buildingDatabase["PUC"] == PUC
+		buildingDatabaseRow = self.buildingDatabase.loc[maskBuildingID,:]
+
 		#	CSVR mean (ratio)
 		CSVR = buildingDatabaseRow["CSVR"].values[0]
 		#	CSVR standard deviation (ratio)
@@ -196,8 +196,10 @@ class ExposureModel(object):
 
 		#	RS Means 2017 database
 		[livingAreas, repCosts] = readDatabase(self.repCostDatabase_mean, struID, firstDataColumn=5)
+		
 		#	-	Interpolate repCost
 		repCost = linearInterpolation(livingArea, livingAreas, repCosts)
+
 		#	USACE fragility curve databases for structures and contents
 		[depthsStru, percDmgsStru] = readDatabase(self.floodFragDatabaseStru_mean, struID, firstDataColumn=4)
 		[depthsCont, percDmgsCont] = readDatabase(self.floodFragDatabaseCont_mean, contID, firstDataColumn=4)
@@ -211,6 +213,7 @@ class ExposureModel(object):
 			[livingAreas_stdev, repCosts_stdev] = readDatabase(self.repCostDatabase_stdev, struID, firstDataColumn=5)
 			repCost_stdev = linearInterpolation(livingArea, livingAreas_stdev, repCosts_stdev)
 		else: repCost_stdev = 0
+
 		randRepCost = self.getPositiveRandomNormalVariable(repCost, repCost_stdev)
 		#	CSVR (content structure value ratio)
 		randCSVR = self.getPositiveRandomNormalVariable(CSVR, CSVR_stdev, decimalPlaces=5)
@@ -237,11 +240,12 @@ class ExposureModel(object):
 		#	-	Initialize by copying so randFFEDepths isn't being modified repeatedly (oh Python)
 		randFldDmgStru = copy(randFFEDepths)
 		randFldDmgCont = copy(randFFEDepths)
+
 		#	-	Iterate through flood scenarios, apply floodDamage function, clip nonreal values
 		for floodScenario in self.floodScenarios:
 			#	Interpolate flood damage to structure and contents from fragility curves
-			randFldDmgStru[floodScenario].apply(lambda x: linearInterpolation(x, depthsStru, percDmgsStru))
-			randFldDmgCont[floodScenario].apply(lambda x: linearInterpolation(x, depthsCont, percDmgsCont))
+			randFldDmgStru[floodScenario] = randFldDmgStru[floodScenario].apply(lambda x: linearInterpolation(x, depthsStru, percDmgsStru))
+			randFldDmgCont[floodScenario] = randFldDmgCont[floodScenario].apply(lambda x: linearInterpolation(x, depthsCont, percDmgsCont))
 
 		#	DEL calculation for structures and contents separately
 		#	-	DEL scenarios, argument of riskCalculation FLAG TO LOOK INTO THIS
@@ -255,7 +259,7 @@ class ExposureModel(object):
 			randContDEL[floodScenario + "_DEL"] = randValueCont * randFldDmgCont[floodScenario]/100
 
 		#~~~~~~~~~~~~~~~~~~~
-		#	Calculate AAL - Need to clean this section with Avery
+		#	Calculate AAL
 		#~~~~~~~~~~~~~~~~~~~
 
 		#	Iterate through each monte carlo realization
@@ -358,7 +362,6 @@ class ExposureModel(object):
 		randStruResults.columns = [column + "_Stru" for column in randStruResults.columns]
 		randContResults.columns = [column + "_Cont" for column in randContResults.columns]
 
-
 		# ~~~~~~~~~~~~~~~~
 		# Save results
 		# ~~~~~~~~~~~~~~~~
@@ -415,7 +418,7 @@ if __name__ == '__main__':
 		saveResults = ["monteCarloAAL", "percDmgStru", "summaryStatsAAL", "buildingInfo"])
 
 	#	Create all buildings
-	exposure.runModel(implementation = "parallel", nBuildings=None, nodes=4, overwrite=True)
+	exposure.runModel(implementation = "parallel", nBuildings=None, nodes=2, overwrite=True)
 
 	end = time.time()
 	print("{} seconds".format((end - start)))

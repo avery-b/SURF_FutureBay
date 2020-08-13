@@ -68,7 +68,7 @@ def getDfFromCsvList(pathCsvFiles, save=True):
 
 	for buildingID in completedResults:
 		resultsDfRow = pd.read_csv(pathCsvFiles + buildingID + ".csv")
-		resultsDfRow.insert(0, "TARGET_FID", np.full(1,buildingID))
+		resultsDfRow.insert(0, 'buildingID', np.full(1,buildingID))
 		resultsDF = resultsDF.append(resultsDfRow)
 
 	if save is True:
@@ -77,7 +77,7 @@ def getDfFromCsvList(pathCsvFiles, save=True):
 	return resultsDF
 
 
-def saveSumStats(pathResults, ID, result, mean=True, stdev = False, varName="", bkgp = None):
+def saveSumStats(pathResults, ID, result, mean=True, median = False, stdev = False, varName="", bkgp = None):
 	"""
 	Saves one csv for each building containing mean and stdev for given column in result
 
@@ -85,13 +85,17 @@ def saveSumStats(pathResults, ID, result, mean=True, stdev = False, varName="", 
 	"""
 	#	For each column in original result dataframe, create new column in resultDF for mean and stdev
 	resultDF = pd.DataFrame()
-	for column in result.columns:
-		if mean is True: resultDF[column + varName + "_mean"] = np.full(1, np.round(np.mean(result[column]), 2))
-		if stdev is True: resultDF[column + varName + "_stdev"] = np.full(1, np.round(np.std(result[column]), 2))
-	#	Add blockgroup
-	if bkgp is not None: resultDF.insert(0, "bkgpGEOID", np.full(1,bkgp))
-	#	Save to csv
-	resultDF.to_csv(os.path.join(pathResults, "{}.csv".format(ID)), index = False)
+	if len(result) > 0:
+		for column in result.columns:
+			if mean is True: resultDF[column + varName + "_mean"] = np.full(1, np.round(np.mean(result[column]), 2))
+			if median is True: resultDF[column + varName + "_median"] = np.full(1, np.round(np.median(result[column]), 2))		
+			if stdev is True: resultDF[column + varName + "_stdev"] = np.full(1, np.round(np.std(result[column]), 2))
+		#	Add blockgroup
+		if bkgp is not None: resultDF.insert(0, "bkgpGEOID", np.full(1,bkgp))
+		#	Save to csv
+		resultDF.to_csv(os.path.join(pathResults, "{}.csv".format(ID)), index = False)
+	else:
+		resultDF.to_csv(os.path.join(pathResults, "{}.csv".format(ID)), index = False)
 
 
 def linearInterpolation(x, xValues, yValues):
@@ -114,8 +118,11 @@ def linearInterpolation(x, xValues, yValues):
 	"""
 	nBounds = len(xValues)
 	try:
-		#	exact match
-		if x in xValues:
+		# if flooding is zero, zero damage
+		if x == 0:
+			return 0
+		# if exact value, return that percentage
+		elif x in xValues:
 			exactValueFound = yValues[x == xValues]
 			return exactValueFound[0]
 		#	values outside bounds
